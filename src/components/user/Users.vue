@@ -327,9 +327,8 @@ export default {
       }
 
       // 请求删除地址
-      const res = await this.$http.delete('users/' + id)
-      console.log(res)
-      if (res.status !== 200) return this.$message.error('用户删除失败')
+      const { data: res } = await this.$http.delete('users/' + id)
+      if (res.meta.status !== 200) return this.$message.error('用户删除失败')
       this.$message.success('删除成功')
       this.getUserList()
     }
