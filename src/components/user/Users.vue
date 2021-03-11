@@ -43,7 +43,8 @@
                                    @click="removeUserById(scope.row.id)"></el-button>
                         <!--分配角色按钮-->
                         <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-                            <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+                            <el-button type="warning" icon="el-icon-setting" size="mini"
+                                       @click="setRoleDialog(scope.row)"></el-button>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -96,13 +97,36 @@
                         <el-input v-model="editForm.mobile"></el-input>
                     </el-form-item>
                 </el-form>
-                <!--底部按钮区域 -->
                 <span slot="footer" class="dialog-footer">
                 <el-button @click="editDialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="editUserInfo">确 定</el-button>
                 </span>
             </el-dialog>
         </el-card>
+
+        <!--分配角色对话框-->
+        <el-dialog title="分配角色" :visible.sync="setRoleDialogVisible" width="50%" @close="setRoleDialogClosed">
+            <div>
+                <p>当前的用户：{{userInfo.username}}</p>
+                <p>当前的角色：{{userInfo.role_name}}</p>
+                <p>
+                    分配新角色:
+                    <el-select v-model="selectedRoleId" placeholder="请选择">
+                        <el-option
+                                v-for="item in rolesList"
+                                :key="item.id"
+                                :label="item.roleName"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </p>
+            </div>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
+          </span>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -230,7 +254,15 @@ export default {
             trigger: 'blur'
           }
         ]
-      }
+      },
+      // 分配角色对话框状态
+      setRoleDialogVisible: false,
+      // 用户的角色信息
+      userInfo: {},
+      // 角色列表
+      rolesList: [],
+      // 选中的角色id
+      selectedRoleId: ''
     }
   },
   created () {
@@ -331,11 +363,39 @@ export default {
       if (res.meta.status !== 200) return this.$message.error('用户删除失败')
       this.$message.success('删除成功')
       this.getUserList()
+    },
+    // 弹出分配角色对话框
+    async setRoleDialog (userInfo) {
+      this.userInfo = userInfo
+      // 展开对话框前，获取所有角色
+      const { data: res } = await this.$http.get('roles')
+      console.log(res)
+      if (res.meta.status !== 200) return this.$message.error('获取角色列表失败')
+      this.rolesList = res.data
+      this.setRoleDialogVisible = true
+    },
+    // 点击按钮分配角色
+    async saveRoleInfo () {
+      // 获取选中的角色id
+      if (!this.selectedRoleId) return this.$message.error('青选择分配角色')
+      const { data: res } = await this.$http.put(`users/${this.userInfo.id}/role`, { rid: this.selectedRoleId })
+      if (res.meta.status !== 200) return this.$message.error('修改角色失败')
+
+      this.$message.success('修改成功')
+      this.setRoleDialogVisible = false
+      this.getUserList()
+    },
+    // 关闭对话框重置select值
+    setRoleDialogClosed () {
+      this.selectedRoleId = ''
+      this.userInfo = ''
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-
+    /*.el-dropdown {*/
+    /*    width: 200px;*/
+    /*}*/
 </style>
