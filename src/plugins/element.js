@@ -24,6 +24,11 @@ import {
   Tooltip,
   Pagination,
   Dialog,
+  Tag,
+  Tree,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
   Message,
   MessageBox
 } from 'element-ui'
@@ -52,6 +57,11 @@ Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
+Vue.use(Tag)
+Vue.use(Tree)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
 // 导入弹框提示组件
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
