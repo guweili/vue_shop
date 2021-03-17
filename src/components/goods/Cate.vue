@@ -241,7 +241,6 @@ export default {
     },
     // 选择项发生变化触发这个函数
     parentCateChange () {
-      console.log(this.selectedKeys)
       // 如果selectedKeys 数组中length大于0，证明选中的父级分裂
       // 繁殖，就说明没有选中任何父级分类
       if (this.selectedKeys.length > 0) {
