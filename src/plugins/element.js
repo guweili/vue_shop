@@ -29,6 +29,7 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
+  Cascader,
   Message,
   MessageBox
 } from 'element-ui'
@@ -62,6 +63,7 @@ Vue.use(Tree)
 Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
+Vue.use(Cascader)
 // 导入弹框提示组件
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

@@ -395,7 +395,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-    /*.el-dropdown {*/
-    /*    width: 200px;*/
-    /*}*/
+    .el-select {
+        margin-left: 7px;
+    }
 </style>
