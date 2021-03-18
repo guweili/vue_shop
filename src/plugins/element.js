@@ -30,6 +30,9 @@ import {
   DropdownMenu,
   DropdownItem,
   Cascader,
+  Alert,
+  Tabs,
+  TabPane,
   Message,
   MessageBox
 } from 'element-ui'
@@ -64,6 +67,10 @@ Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.use(Cascader)
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
+
 // 导入弹框提示组件
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
