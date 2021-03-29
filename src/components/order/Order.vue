@@ -13,7 +13,7 @@
             <el-row>
                 <el-col :span="8">
                     <el-input placeholder="请输入内容" v-model="queryInfo.query">
-                        <el-button slot="append" icon="el-icon-search"></el-button>
+                        <el-button slot="append" icon="el-icon-search" @click="getOrdersList"></el-button>
                     </el-input>
                 </el-col>
             </el-row>
@@ -81,10 +81,9 @@
         <el-dialog
                 title="物流进度"
                 :visible.sync="progressVisible"
-                width="50%"
-                @close="addressDialogClosed">
+                width="50%">
             <!--修改参数对话框-->
-            <el-timeline :reverse="reverse">
+            <el-timeline>
                 <el-timeline-item
                         v-for="(activity, index) in progressInfo"
                         :key="index"
